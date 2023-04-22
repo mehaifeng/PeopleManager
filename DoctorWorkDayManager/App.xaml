@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:DoctorWorkDayManager"
              StartupUri="Views/Login.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="ComboboxBackGround" Color="White"/>
     </Application.Resources>
 </Application>

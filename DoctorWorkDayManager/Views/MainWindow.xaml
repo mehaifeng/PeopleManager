@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:DoctorViews="clr-namespace:DoctorWorkDayManager.Views.DoctorViews"
         xmlns:PatientViews="clr-namespace:DoctorWorkDayManager.Views.PatientViews"
+        xmlns:SchedulingView ="clr-namespace:DoctorWorkDayManager.Views.SchedulingView"
         xmlns:viewmodel="clr-namespace:DoctorWorkDayManager.ViewModels"
         mc:Ignorable="d"    
         Height="720"
@@ -91,6 +92,7 @@
                         Style="{StaticResource TabItemStyle}"
                         Name="WorkDay"
                         Header="&#xe7e9;">
+                            <SchedulingView:SchedulingView/>
                         </TabItem>
                 </TabControl>
             </Grid>

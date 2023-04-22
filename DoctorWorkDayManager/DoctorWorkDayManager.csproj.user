@@ -16,6 +16,9 @@
     <Compile Update="Views\PatientViews\PatientManageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\SchedulingView\SchedulingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Resources\Dictionary\CommonStyle.xaml">
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PatientViews\PatientManageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SchedulingView\SchedulingView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -15,59 +15,10 @@
         <viewmodel:DoctorManageViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <ResourceDictionary>
-            <Style x:Key="SearchBoxStyle" TargetType="TextBox">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Border
-                                    BorderThickness="1"
-                                    BorderBrush="Gray"
-                                    CornerRadius="20">
-                                    <Grid>
-                                        <TextBox
-                                            x:Name="searchbox"
-                                            Margin="10,0,0,0"
-                                            Width="110"
-                                            Height="27"
-                                            BorderThickness="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            VerticalContentAlignment="Center"
-                                            Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Text}">
-                                        </TextBox>
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            Margin="10,0,0,0"
-                                            Height="27">
-                                        </TextBlock>
-                                        <!--搜索按钮-->
-                                        <Button
-                                            Command="{Binding SearchPersonCommand}"
-                                            CommandParameter="{Binding ElementName=searchbox, Path=Text}"
-                                            HorizontalAlignment="Right"
-                                            Cursor="Hand"
-                                            Width="25">
-                                            <Button.Template>
-                                                <ControlTemplate>
-                                                    <TextBlock
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        FontFamily="../../Resources/Fonts/#iconfont"
-                                                        FontSize="18"
-                                                        Text="&#xe60c;"/>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-            </Style>
-            <Style x:Key="PageButton" TargetType="Button">
+        <ResourceDictionary Source="../../Resources/Dictionary/CommonStyle.xaml">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Style x:Key="PageButton" TargetType="Button">
                 <Style.Setters>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -97,6 +48,8 @@
                     </Setter>
                 </Style.Setters>
             </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
