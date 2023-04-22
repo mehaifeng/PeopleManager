@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DoctorWorkDayManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace DoctorWorkDayManager.Views.SchedulingView
     /// </summary>
     public partial class SchedulingView : UserControl
     {
+        SchedulingViewModel _viewmodel;
         public SchedulingView()
         {
             InitializeComponent();
+            _viewmodel = new SchedulingViewModel();
+            this.DataContext = _viewmodel;
             Department_combobox.ItemsSource = new List<string>
             {
                 "全部",

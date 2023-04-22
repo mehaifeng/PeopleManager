@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DoctorWorkDayManager.Views.SchedulingView"
+             xmlns:viewmodel ="clr-namespace:DoctorWorkDayManager.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodel:SchedulingViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -94,6 +96,7 @@
             </Grid.RowDefinitions>
             <Grid
                 Grid.Row="0">
+                <!--选择一周-->
                 <StackPanel
                     Width="180"
                     Margin="0,0,20,0"
@@ -115,7 +118,8 @@
             </Grid>
             <Grid
                 Grid.Row="1">
-                <DataGrid>
+                <DataGrid
+                    ItemsSource="{Binding Schedulings}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="序号" 
                                         Binding="{Binding No}" 
@@ -125,31 +129,31 @@
                                         Binding="{Binding Id}"
                                         Width="*"/>
                         <DataGridTextColumn Header="姓名"
-                                        Binding="{Binding Name}"
+                                        Binding="{Binding UserName}"
                                         Width="*"/>
                         <DataGridTextColumn Header="科室"
-                                        Binding="{Binding Department}"
+                                        Binding="{Binding UserDepartment}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周一"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Monday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周二"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Tuesday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周三"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Wednesday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周四"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Thursday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周五"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Friday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周六"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Saturday}"
                                         Width="*"/>
                         <DataGridTextColumn Header="周日"
-                                        Binding="{Binding Joblevel}"
+                                        Binding="{Binding Sunday}"
                                         Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
