@@ -72,7 +72,7 @@ namespace DoctorWorkDayManager.Server.Dbconn
         /// <returns></returns>
         public UserInfoDTO SingleAsync(SqlSugarClient db, UserInfoDTO model)
         {
-            return db.Queryable<UserInfoDTO>().Single(it => it.Id == model.Id);
+            return db.Queryable<UserInfoDTO>().Single(it => it.id == model.Id);
         }
         /// <summary>
         /// 修改
@@ -81,7 +81,7 @@ namespace DoctorWorkDayManager.Server.Dbconn
         /// <returns></returns>
         public bool UpdateAsync(SqlSugarClient db, UserInfoDTO model)
         {
-            return db.Updateable(model).UpdateColumns(it => new { it.Contact, it.WorkDate, it.UserType }).Where(it => it.Id == model.Id).ExecuteCommand() > 0;
+            return db.Updateable(model).UpdateColumns(it => new { it.Contact, it.WorkDate, it.UserType }).Where(it => it.id == model.Id).ExecuteCommand() > 0;
         }
     }
 }

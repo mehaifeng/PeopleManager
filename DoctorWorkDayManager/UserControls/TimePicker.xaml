@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="DoctorWorkDayManager.UserControls.TimePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DoctorWorkDayManager.UserControls"
+             mc:Ignorable="d" 
+             Background="Transparent">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Resources/Dictionary/CommonStyle.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="上午"/>
+                <ComboBox 
+                    Name="ShoursCb" 
+                    MinWidth="20" 
+                    ItemsSource="{Binding hours}" 
+                    SelectedIndex="0" 
+                    VerticalContentAlignment="Center" 
+                    MinHeight="20" 
+                    SelectionChanged="hoursChanged"
+                    Template="{StaticResource ComboBoxStyle}"/>
+                <TextBlock 
+                    Text=":" 
+                    VerticalAlignment="Center"/>
+                <ComboBox 
+                    Name="SminutesCb" 
+                    MinWidth="20" 
+                    ItemsSource="{Binding minutes}" 
+                    SelectedIndex="0" 
+                    VerticalContentAlignment="Center" 
+                    MinHeight="20" 
+                    SelectionChanged="minutesChanged"
+                    Template="{StaticResource ComboBoxStyle}"/>
+                <StackPanel/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="下午"/>
+                    <ComboBox 
+                        Name="XhoursCb" 
+                        MinWidth="20" 
+                        ItemsSource="{Binding hours}" 
+                        SelectedIndex="0" 
+                        VerticalContentAlignment="Center" 
+                        MinHeight="20" 
+                        SelectionChanged="hoursChanged"
+                        Template="{StaticResource ComboBoxStyle}"/>
+                    <TextBlock 
+                        Text=":" 
+                        VerticalAlignment="Center"/>
+                    <ComboBox 
+                        Name="XminutesCb" 
+                        MinWidth="20" 
+                        ItemsSource="{Binding minutes}" 
+                        SelectedIndex="0" 
+                        VerticalContentAlignment="Center" 
+                        MinHeight="20" 
+                        SelectionChanged="minutesChanged"
+                        Template="{StaticResource ComboBoxStyle}"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

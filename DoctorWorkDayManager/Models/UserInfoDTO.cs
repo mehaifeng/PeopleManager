@@ -37,6 +37,11 @@ namespace DoctorWorkDayManager.Models
         [ObservableProperty]
         public string? gender;
         /// <summary>
+        /// 身份证号
+        /// </summary>
+        [ObservableProperty]
+        public string? personid;
+        /// <summary>
         /// 联系电话
         /// </summary>
         [ObservableProperty]

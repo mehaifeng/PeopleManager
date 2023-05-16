@@ -170,7 +170,6 @@
                     <UniformGrid
                         Rows="2"
                         Columns="2"
-                        
                         Margin="0,20,0,0">
                         <TextBlock
                             VerticalAlignment="Center"
@@ -383,6 +382,8 @@
                             Text="文档操作"/>
                     <!--导出按钮-->
                     <Button
+                        Command="{Binding OutputExcelFileCommand}"
+                        CommandParameter="{Binding ElementName=dd}"
                             Margin="0,0,0,5"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
@@ -422,6 +423,8 @@
                     </Button>
                     <!--打印按钮-->
                     <Button
+                        Command="{Binding PrintExcelCommand}"
+                        CommandParameter="{Binding ElementName=dd}"
                         Margin="0,0,0,5"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom">
@@ -484,6 +487,9 @@
                                         Width="*"/>
                     <DataGridTextColumn Header="姓名"
                                         Binding="{Binding Name}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="身份证号"
+                                        Binding="{Binding Personid}"
                                         Width="*"/>
                     <DataGridTextColumn Header="联系电话"
                                         Binding="{Binding Contact}"
