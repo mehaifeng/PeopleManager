@@ -7,17 +7,17 @@ namespace DoctorWorkDayManager.Models
     [SugarTable("UserInfo")]
     public partial class UserInfoDTO:ObservableObject
     {
-        private int _id;
+        private int _no;
         /// <summary>
         /// 序号（不在数据库）
         /// </summary>
         [SugarColumn(IsIgnore =true)]
         public int No
         {
-            get => _id;
+            get => _no;
             set
             {
-                SetProperty(ref _id, value);
+                SetProperty(ref _no, value);
                 OnPropertyChanged(nameof(No));
             }
         }

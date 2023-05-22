@@ -14,6 +14,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.IO;
+using OfficeOpenXml;
+using System.Windows.Media;
 
 namespace DoctorWorkDayManager.ViewModels
 {
@@ -49,6 +52,100 @@ namespace DoctorWorkDayManager.ViewModels
                 
             }
         }
+        [RelayCommand]
+        private void UpdateAll(DataGrid dataGrid)
+        {
+            try
+            {
+                List<UserInfoDTO> newInfos = UserInfos.Select(u => new UserInfoDTO 
+                {
+                    id= u.Id,
+                    name= u.Name,
+                    gender = u.Gender,
+                    personid = u.Personid,
+                    contact = u.Contact,
+                    academic = u.Academic,
+                    department = u.Department,
+                    room = u.Room,
+                    joblevel = u.Joblevel,
+                    workDate = u.WorkDate,
+                    userType = u.UserType
+                }).ToList();
+                var items = newInfos;
+                db.Updateable(items).ExecuteCommand();
+                MessageBox.Show("保存完毕");
+            }
+            catch
+            {
+                MessageBox.Show("发生错误，无法保存");
+                return;
+            }
+        }
+        /// <summary>
+        /// 导出到Excel
+        /// </summary>
+        /// <param name="dataGrid"></param>
+        [RelayCommand]
+        private void ExportToExcel(DataGrid dataGrid)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+            using (ExcelPackage excelPackage = new ExcelPackage())
+            {
+                // 创建工作表
+                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Sheet1");
+
+                // 将DataGrid中的列标题写入第一行
+                for (int i = 0; i < dataGrid.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataGrid.Columns[i].Header;
+                }
+                // 将DataGrid中的行数据写入工作表中
+                for (int i = 0; i < dataGrid.Items.Count; i++)
+                {
+                    for (int j = 0; j < dataGrid.Columns.Count; j++)
+                    {
+                        var cellValue = UserInfos[i].GetType().GetProperty(dataGrid.Columns[j].SortMemberPath).GetValue(UserInfos[i], null);
+                        worksheet.Cells[i + 2, j + 1].Value = cellValue;
+                    }
+                }
+                // 将Excel文件保存到磁盘
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    FileInfo file = new FileInfo(saveFileDialog.FileName);
+                    excelPackage.SaveAs(file);
+                }
+            }
+        }
+        /// <summary>
+        /// 打印表格
+        /// </summary>
+        /// <param name="dataGrid"></param>
+        [RelayCommand]
+        private void Print(DataGrid dataGrid)
+        {
+            PrintDialog printDialog = new PrintDialog();
+
+            if (printDialog.ShowDialog() == true)
+            {
+                // 获取DataGrid的可视化对象
+                var visual = new DrawingVisual();
+                var drawingContext = visual.RenderOpen();
+                var size = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+                var scale = Math.Min(size.Width / dataGrid.ActualWidth, size.Height / dataGrid.ActualHeight);
+                drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                drawingContext.DrawRectangle(new VisualBrush(dataGrid), null, new Rect(new Point(), new Size(dataGrid.ActualWidth, dataGrid.ActualHeight)));
+                drawingContext.Close();
+
+                // 打印可视化对象
+                printDialog.PrintVisual(visual, "DataGrid Printing.");
+            }
+        }
+
+
+
         [RelayCommand]
         void Refresh()
         {

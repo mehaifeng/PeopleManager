@@ -94,7 +94,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Foreground="White"
-                                                Text="班控"/>
+                                                Text="纠错"/>
                                                 <Border.Style>
                                                     <Style TargetType="Border">
                                                         <Style.Triggers>
@@ -115,9 +115,10 @@
                         </Button.Style>
                     </Button>
                     <Button
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Margin="10,0,0,15">
+                        Command="{Binding UpdateAllCommand}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="10,0,0,15">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Template">
@@ -132,7 +133,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Foreground="White"
-                                                Text="Test"/>
+                                                Text="提交"/>
                                                 <Border.Style>
                                                     <Style TargetType="Border">
                                                         <Style.Triggers>
@@ -191,7 +192,6 @@
                             Text="{Binding Top_contact}"/>
                     </UniformGrid>
                 </StackPanel>
-                
                 <Grid Grid.Column="2">
                     <Grid>
                         <StackPanel >
@@ -382,7 +382,7 @@
                             Text="文档操作"/>
                     <!--导出按钮-->
                     <Button
-                        Command="{Binding OutputExcelFileCommand}"
+                        Command="{Binding ExportToExcelCommand}"
                         CommandParameter="{Binding ElementName=dd}"
                             Margin="0,0,0,5"
                             HorizontalAlignment="Center"
@@ -423,7 +423,7 @@
                     </Button>
                     <!--打印按钮-->
                     <Button
-                        Command="{Binding PrintExcelCommand}"
+                        Command="{Binding PrintCommand}"
                         CommandParameter="{Binding ElementName=dd}"
                         Margin="0,0,0,5"
                         HorizontalAlignment="Center"
