@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace DoctorWorkDayManager.ViewModels
 {
     public partial class SchedulingViewModel:ObservableObject
     {
+        Stopwatch stopwatch = new Stopwatch();
         public SchedulingViewModel()
         {
             InitLoad();
@@ -48,6 +50,12 @@ namespace DoctorWorkDayManager.ViewModels
         /// </summary>
         [ObservableProperty]
         Visibility isShowDoctorHeader = Visibility.Collapsed;
+
+        /// <summary>
+        /// 显示医生总数/未排班医生人数
+        /// </summary>
+        [ObservableProperty]
+        string unSchedulingDoctors;
 
         /// <summary>
         /// 选中行（单）
@@ -120,10 +128,20 @@ namespace DoctorWorkDayManager.ViewModels
             connectionConfig.InitKeyType = InitKeyType.SystemTable;
             db = new SqlSugarClient(connectionConfig);
             Schedulings = new ObservableCollection<SchedulingDTO>(db.Queryable<SchedulingDTO>().ToList());
+            GetDoctorSchedulingStatus();
             //重新排序
             NoSorting();
             // 插入用户数据
             InsertUserInfo();
+        }
+        /// <summary>
+        /// 获取医生排班状态
+        /// </summary>
+        void GetDoctorSchedulingStatus()
+        {  
+            //医生人员总数
+            int doctorNum = db.Queryable<UserInfoDTO>().ToList().Count;
+            UnSchedulingDoctors = $"医生人数：{doctorNum}人/未排班人数：{doctorNum - Schedulings.Count}人";
         }
         /// <summary>
         /// 插入用户数据
@@ -167,6 +185,9 @@ namespace DoctorWorkDayManager.ViewModels
             WeekEnd = endWeek;
         }
 
+        /// <summary>
+        /// 选中某个用户
+        /// </summary>
         [RelayCommand]
         void Selected()
         {
@@ -195,6 +216,54 @@ namespace DoctorWorkDayManager.ViewModels
             {
                 IsShowDoctorHeader = Visibility.Collapsed;
             }
+        }
+
+        /// <summary>
+        /// 一键排班
+        /// </summary>
+        [RelayCommand]
+        void OneKeyScheduling()
+        {
+            stopwatch.Start();
+            var AllDoctors = db.Queryable<UserInfoDTO>().ToList();
+            List<string> intList = Schedulings.Select(t => t.Id).ToList();
+            //删掉AllDoctors中已经排班的医生
+            foreach (var item in intList)
+            {
+                AllDoctors.Remove(AllDoctors.Where(t => t.Id == item).ToList().First());
+            }
+            //随机排班
+            Random random = new Random();
+            foreach (var item in AllDoctors)
+            {
+                int randomValue = random.Next(0, 2);
+                //插入排班数据到数据表中
+                db.Insertable<SchedulingDTO>(new SchedulingDTO()
+                {
+                    Id = item.Id,
+                    UserName = item.Name,
+                    UserDepartment = item.Department,
+                    No = Schedulings.Count + 1 + "",
+                    DateFrom = WeekStart.ToString(),
+                    DateTo = WeekEnd.ToString(),
+                    Monday = randomValue == 0 ? "8:00-12:00;14:00-17:00" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Tuesday = randomValue == 0 ? "8:00-12:00;14:00-17:00" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Wednesday = randomValue == 0 ? "8:00-12:00;14:00-17:00" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Thursday = randomValue == 0 ? "8:00-12:00;14:00-17:00" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Friday = randomValue == 0 ? "8:00-12:00;14:00-17:00" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Saturday = randomValue == 0 ? "rest" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                    Sunday = randomValue == 0 ? "rest" : randomValue == 1 ? "8 : 00 - 12:00" : "14:00 - 17:00",
+                }).ExecuteCommand() ;
+            }
+            Schedulings = new ObservableCollection<SchedulingDTO>(db.Queryable<SchedulingDTO>().ToList());
+            //重新排序
+            NoSorting();
+            // 插入用户数据
+            InsertUserInfo();
+            //刷新一下排班状态
+            GetDoctorSchedulingStatus();
+            stopwatch.Stop();
+            MessageBox.Show($"排班完成，用时{stopwatch.Elapsed.ToString()}");
         }
     }
 }

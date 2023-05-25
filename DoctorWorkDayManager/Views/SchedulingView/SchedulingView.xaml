@@ -159,6 +159,7 @@
             </Grid.RowDefinitions>
             <Grid
                 Grid.Row="0">
+                <!--用户信息预览区域-->
                 <StackPanel 
                     Grid.Column="1"   
                     Orientation="Horizontal"
@@ -196,6 +197,33 @@
                             Text="{Binding Top_contact}"/>
                     </UniformGrid>
                 </StackPanel>
+                <Grid 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,220,0"
+                    Height="80">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        FontWeight="Black"
+                        Grid.Row="0"
+                        Text="{Binding UnSchedulingDoctors,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        VerticalAlignment="Center"/>
+                    <Button
+                        Command="{Binding OneKeySchedulingCommand}"
+                        Grid.Row="1"
+                        Content="一键排班"
+                        Width="80"
+                        Height="30"
+                        VerticalAlignment="Center"
+                        Background="#FF3C8EE8"
+                        Foreground="White"
+                        BorderThickness="0"/>
+                    <!--医生人数/未排班人数显示-->
+                </Grid>
+                
                 <!--选择一周-->
                 <StackPanel
                     Width="180"
