@@ -90,7 +90,7 @@
                         Width="250"
                         Margin="0,50,0,0"
                         VerticalAlignment="Top"
-                        Text="{Binding .}">
+                        Text="19928456311">
                         <TextBox.Template>
                             <ControlTemplate>
                                 <Border
@@ -120,11 +120,10 @@
                         CornerRadius="8"
                         BorderThickness="1"
                         BorderBrush="Gray">
-                        <PasswordBox
+                        <TextBlock
                             Margin="3"
-                            BorderThickness="0"
-                            VerticalAlignment="Center"
-                            PasswordChar="●"/>
+                            Text="●●●●●●●●●●●"
+                            VerticalAlignment="Center"/>
                     </Border>
                     <!--登录-->
                     <Button

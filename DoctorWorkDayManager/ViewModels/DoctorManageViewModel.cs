@@ -17,15 +17,25 @@ using System.Windows.Controls;
 using System.IO;
 using OfficeOpenXml;
 using System.Windows.Media;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DoctorWorkDayManager.ViewModels
 {
     public partial class DoctorManageViewModel : ObservableObject
     {
-        public SqlSugarClient db;
+        SqlSugarClient db;
+        string historyOperated = "";
+        #region 路径常量
+        static string historyPath = @$"{System.Environment.CurrentDirectory}/historyOperated";
+        #endregion
 
         public DoctorManageViewModel()
         {
+            if (!File.Exists(historyPath))
+            {
+                Directory.CreateDirectory(historyPath);
+            }
             DataInit();
         }
         /// <summary>
@@ -49,7 +59,6 @@ namespace DoctorWorkDayManager.ViewModels
                 {
                     UserInfos[i].No = i;
                 }
-                
             }
         }
         [RelayCommand]
@@ -57,6 +66,7 @@ namespace DoctorWorkDayManager.ViewModels
         {
             try
             {
+                //更新信息
                 List<UserInfoDTO> newInfos = UserInfos.Select(u => new UserInfoDTO 
                 {
                     id= u.Id,
@@ -73,6 +83,7 @@ namespace DoctorWorkDayManager.ViewModels
                 }).ToList();
                 var items = newInfos;
                 db.Updateable(items).ExecuteCommand();
+                historyOperated += $"\n保存人员数据,id={newInfos.FirstOrDefault().Id},姓名：{newInfos.FirstOrDefault().Name}; 在{System.DateTime.Now}\n";
                 MessageBox.Show("保存完毕");
             }
             catch
@@ -94,7 +105,6 @@ namespace DoctorWorkDayManager.ViewModels
             {
                 // 创建工作表
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Sheet1");
-
                 // 将DataGrid中的列标题写入第一行
                 for (int i = 0; i < dataGrid.Columns.Count; i++)
                 {
@@ -114,6 +124,7 @@ namespace DoctorWorkDayManager.ViewModels
                 saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
                 if (saveFileDialog.ShowDialog() == true)
                 {
+                    historyOperated += $"\n进行了全表Excel文件导出，在{System.DateTime.Now}";
                     FileInfo file = new FileInfo(saveFileDialog.FileName);
                     excelPackage.SaveAs(file);
                 }
@@ -138,7 +149,7 @@ namespace DoctorWorkDayManager.ViewModels
                 drawingContext.PushTransform(new ScaleTransform(scale, scale));
                 drawingContext.DrawRectangle(new VisualBrush(dataGrid), null, new Rect(new Point(), new Size(dataGrid.ActualWidth, dataGrid.ActualHeight)));
                 drawingContext.Close();
-
+                historyOperated += $"\n进行了全表打印，在{System.DateTime.Now}";
                 // 打印可视化对象
                 printDialog.PrintVisual(visual, "DataGrid Printing.");
             }
@@ -171,6 +182,7 @@ namespace DoctorWorkDayManager.ViewModels
                     item.No = UserInfos.IndexOf(item);
                 }
             }
+            historyOperated += $"\n进行了新行添加，第{selectedItem.No}行下，在{System.DateTime.Now}";
         }
         /// <summary>
         /// 移除某些行
@@ -188,6 +200,7 @@ namespace DoctorWorkDayManager.ViewModels
             {
                 item.No = UserInfos.IndexOf(item);
             }
+            historyOperated += $"\n进行了行删除，第{selectedItem?.No}行，在{System.DateTime.Now}";
         }
         /// <summary>
         /// 选中行事件
@@ -233,6 +246,13 @@ namespace DoctorWorkDayManager.ViewModels
             {
                 MessageBox.Show("未找到该用户");
             }
+            historyOperated += $"\n进行了信息搜寻，姓名或id={NameOrId}，在{System.DateTime.Now}";
+        }
+
+        [RelayCommand]
+        void CheckOperatedLog()
+        {
+            MessageBox.Show(historyOperated);
         }
 
         /// <summary>
@@ -315,6 +335,10 @@ namespace DoctorWorkDayManager.ViewModels
         [ObservableProperty]
         string top_contact;
 
+        /// <summary>
+        /// 新增的人员
+        /// </summary>
+        List<UserInfoDTO> NewItems { get; set; } = new List<UserInfoDTO>();
         
 
     }
