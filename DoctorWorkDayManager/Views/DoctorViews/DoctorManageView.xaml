@@ -214,6 +214,7 @@
                                 </StackPanel>
                                 <!--查看日志-->
                                 <Button
+                                    Command="{Binding CheckOperatedLogCommand}"
                                     Content="查看日志"
                                     Margin="0,15,0,0"
                                     VerticalAlignment="Center"
@@ -557,7 +558,7 @@
                         Height="20"/>
                 <TextBlock VerticalAlignment="Center">
                 <Run Text="第"/>
-                <Run x:Name="rCurrent" Text="0"/>
+                <Run x:Name="rCurrent" Text="1"/>
                 <Run Text="页"/>
                 </TextBlock>
                 <Button Margin="5,0" 
@@ -574,7 +575,7 @@
                         Height="20"/>
                 <TextBlock VerticalAlignment="Center">
                 <Run Text="共"/>
-                <Run x:Name="rTotal" Text="0"/>
+                <Run x:Name="rTotal" Text="1"/>
                 <Run Text="页"/>
                 </TextBlock>
             </StackPanel>

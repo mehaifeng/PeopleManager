@@ -38,7 +38,7 @@
                     Margin="10,0,0,0"
                     FontWeight="Bold"
                     VerticalAlignment="Center"
-                    Text="DoctorStationManager"/>
+                    Text="医生站人员信息管理"/>
                 <!--最大最小化-->
                 <StackPanel
                     Orientation="Horizontal"
@@ -74,7 +74,7 @@
                         Height="120"
                         Width="100"
                         Style="{StaticResource TabItemStyle}"
-                        Name="DoctorManage"
+                        Name="医生信息管理"
                         Header="&#xe611;">
                         <DoctorViews:DoctorManageView/>
                     </TabItem>
@@ -82,7 +82,7 @@
                         Height="120"
                         Width="120"
                         Style="{StaticResource TabItemStyle}"
-                        Name="PatientManage"
+                        Name="患者信息管理"
                         Header="&#xe6b6;">
                             <PatientViews:PatientManageView/>
                     </TabItem>
@@ -90,7 +90,7 @@
                         Height="120"
                         Width="100"
                         Style="{StaticResource TabItemStyle}"
-                        Name="WorkDay"
+                        Name="医生排班管理"
                         Header="&#xe7e9;">
                             <SchedulingView:SchedulingView/>
                         </TabItem>
