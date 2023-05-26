@@ -4,7 +4,7 @@ using System;
 
 namespace DoctorWorkDayManager.Models
 {
-    [SugarTable("UserInfo")]
+    [SugarTable("UserInfoWPF")]
     public partial class UserInfoDTO:ObservableObject
     {
         private int _no;

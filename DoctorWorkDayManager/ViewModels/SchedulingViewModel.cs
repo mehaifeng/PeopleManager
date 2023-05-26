@@ -148,10 +148,13 @@ namespace DoctorWorkDayManager.ViewModels
         /// </summary>
         void InsertUserInfo()
         {
-            foreach (var item in Schedulings)
+            if (Schedulings.Count > 0)
             {
-                item.UserName =  db.Queryable<UserInfoDTO>().Where(t => t.Id == item.Id).ToList().First().Name;
-                item.UserDepartment = db.Queryable<UserInfoDTO>().Where(t => t.Id == item.Id).ToList().First().Department;
+                foreach (var item in Schedulings)
+                {
+                    item.UserName = db.Queryable<UserInfoDTO>().Where(t => t.Id == item.Id).ToList().First()?.Name;
+                    item.UserDepartment = db.Queryable<UserInfoDTO>().Where(t => t.Id == item.Id).ToList().First().Department;
+                }
             }
         }
         /// <summary>
